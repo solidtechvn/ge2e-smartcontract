@@ -1,7 +1,6 @@
 require('@nomiclabs/hardhat-waffle')
 require('@nomiclabs/hardhat-etherscan')
-require('dotenv').config()
-const { ETHERSCAN_API_KEY, PRIVATE_KEY, BSC_URL } = process.env
+const BSC = require('./config')
 
 module.exports = {
   solidity: {
@@ -14,14 +13,14 @@ module.exports = {
     },
   },
   networks: {
-    testnet: {
-      url: BSC_URL,
-      chainId: 97,
+    bsc: {
+      url: BSC.url,
+      chainId: BSC.chainId,
       gasPrice: 20000000000,
-      accounts: [PRIVATE_KEY],
+      accounts: [BSC.private_key],
     },
   },
   etherscan: {
-    apiKey: ETHERSCAN_API_KEY,
+    apiKey: BSC.etherscan_api_key,
   },
 }

@@ -1,12 +1,11 @@
 const { ethers } = require("hardhat");
-require('dotenv').config()
-const { TOKEN_ADDRESS, BSC_WS_URL } = process.env;
 const tokenABI = require('../token-api.json');
+const BSC = require('../config')
 
 async function main() {
-  const provider = new ethers.providers.WebSocketProvider(BSC_WS_URL);
+  const provider = new ethers.providers.WebSocketProvider(BSC.wss);
 
-  const INSTANCE = new ethers.Contract(TOKEN_ADDRESS, tokenABI, provider);
+  const INSTANCE = new ethers.Contract(BSC.token_address, tokenABI, provider);
 
   // Transfer Event Listener
   INSTANCE.on("Transfer", (from, to, value, event) => {
@@ -25,3 +24,4 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
